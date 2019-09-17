@@ -4,7 +4,6 @@ import axios from 'axios';
 import moment from 'moment'
 import haversine from 'haversine';
 
-const TOKEN = process.env.TOKEN;
 const MINUTE_DELTA = '15';
 const DISTANCE = 10000;
 
@@ -14,7 +13,7 @@ async function queryForWeather(userPosition) {
   const { data: mostRecentData } = await axios({
     method: 'get',
     url: `https://demo-apim.westeurope.cloudapp.azure.com/api_secure/PrecipitationAPI/3.0.0/weather/precipitation/availability?location=stockholm`,
-    headers: { Authorization: TOKEN }
+    headers: { Authorization: process.env.REACT_APP_ERICSSON_TOKEN }
   }).catch(console.error);
 
   const toAnalysePromises = [];
@@ -25,7 +24,7 @@ async function queryForWeather(userPosition) {
       axios({
         method: 'get',
         url: `https://demo-apim.westeurope.cloudapp.azure.com/api_secure/PrecipitationAPI/3.0.0/weather/precipitation/at/${timeToTry.format("YYYYMMDDHHmm")}?location=stockholm`,
-        headers: { Authorization: TOKEN }
+        headers: { Authorization: process.env.REACT_APP_ERICSSON_TOKEN }
       }).catch(console.error)
     );
 
