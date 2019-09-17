@@ -41,11 +41,12 @@ async function queryForWeather(userPosition) {
       return distance < DISTANCE;
     });
 
-    const avg = points.reduce((reduced, { properties }) =>  reduced + properties.value, 0) / points.length;
+    const avg = points.length > 0
+      ? points.reduce((reduced, { properties }) =>  reduced + properties.value, 0) / points.length
+      : 0;
 
     return avg;
   });
-
   
    return averages[0] + (averages[0] - averages[averages.length - 1]);
 }
